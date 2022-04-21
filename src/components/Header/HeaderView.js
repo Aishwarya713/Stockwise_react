@@ -24,6 +24,7 @@ import classNames from "classnames";
 import { Badge, Typography } from "../Wrappers";
 import Notification from "../Notification";
 import UserAvatar from "../UserAvatar";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const messages = [
   {
@@ -78,7 +79,9 @@ const notifications = [
   }
 ];
 
-const Header = ({ classes, isSidebarOpened, toggleSidebar, ...props }) => (
+const Header = ({ classes, isSidebarOpened, toggleSidebar, ...props }) => {
+  const history = useHistory()
+  return (
   <AppBar position="fixed" className={classes.appBar}>
     <Toolbar className={classes.toolbar}>
       <IconButton
@@ -263,6 +266,7 @@ const Header = ({ classes, isSidebarOpened, toggleSidebar, ...props }) => (
             classes.profileMenuItem,
             classes.headerMenuItem
           )}
+          onClick={() => history.push('/app/profile')}
         >
           <AccountIcon className={classes.profileMenuIcon} /> Profile
         </MenuItem>
@@ -451,6 +455,6 @@ const styles = theme => ({
   sendButtonIcon: {
     marginLeft: theme.spacing.unit * 2
   }
-});
+});}
 
 export default withStyles(styles)(Header);

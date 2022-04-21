@@ -1,0 +1,58 @@
+.body {
+    flex-direction: row;
+}
+.header {
+    height: 200px;
+    background: linear-gradient(to right, #00416a, #e4e5e6);
+}
+.card {
+    margin: auto;
+    width: 70%;
+    padding: 50px;
+    background-color: #ffffff;
+    min-height: 300px;
+    box-shadow: 0px 2px 10px rgba(111,126,144,0.25);
+    border-radius: 18px;
+    margin-top: -100px;
+}
+.img {
+    display: block;
+    margin: 0 auto;
+}
+.right-side {
+    text-align: right;
+}
+.center-text {
+    color: blue;
+    text-align: center;
+}
+.edit-profile {
+    margin-bottom: 30px;
+}
+.edit-icon {
+    display: inline;
+}
+.edit-container {
+    display: inline-flex;
+}
+.box {
+    position: absolute;
+    top: 30%;
+    left: 25%;
+    background-color: #ffffff;
+    width: 60%;
+    padding: 50px;
+    min-height: 300px;
+    box-shadow: 0px 2px 10px rgba(111,126,144,0.25);
+    border-radius: 18px;
+}
+.modal-heading {
+    text-align: center;
+    color: cornflowerblue;
+}
+.input {
+    width: 100%;
+}
+.button-text {
+    color: #ffffff;
+}

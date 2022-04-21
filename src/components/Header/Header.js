@@ -38,6 +38,7 @@ import {
 import { useUserDispatch, signOut, stockData } from "../../context/UserContext";
 import axios from "axios";
 import { SET_STOCK_DATA } from "../../store/actionsConstants";
+import { useHistory } from "react-router-dom";
 
 const messages = [
   {
@@ -95,6 +96,7 @@ const notifications = [
 export default function Header(props) {
   var classes = useStyles();
   const dispatch = useDispatch()
+  const history = useHistory()
 
   // global
   var layoutState = useLayoutState();
@@ -315,23 +317,16 @@ export default function Header(props) {
           disableAutoFocusItem
         >
           <div className={classes.profileMenuUser}>
-            <Typography variant="h4" weight="medium">
+            <Typography variant="h4" weight="medium" >
               John Smith
             </Typography>
-            {/* <Typography
-              className={classes.profileMenuLink}
-              component="a"
-              color="primary"
-              href="https://flatlogic.com"
-            >
-              Flalogic.com
-            </Typography> */}
           </div>
           <MenuItem
             className={classNames(
               classes.profileMenuItem,
               classes.headerMenuItem,
             )}
+            onClick={() => history.push('/app/profile')}
           >
             <AccountIcon className={classes.profileMenuIcon} /> Profile
           </MenuItem>

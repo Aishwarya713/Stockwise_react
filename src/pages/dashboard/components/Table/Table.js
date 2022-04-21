@@ -16,31 +16,28 @@ const states = {
 };
 
 export default function TableComponent({ data }) {
-  const classes = useStyles();
-  var keys = Object.keys(data[0]).map(i => i.toUpperCase());
-  keys.shift(); // delete "id" key
-
   return (
     <Table className="mb-0">
       <TableHead>
         <TableRow>
-          {keys.map(key => (
-            <TableCell key={key}>{key}</TableCell>
-          ))}
+        <TableCell key={"Name"}>{"Name"}</TableCell>
+        <TableCell key={"Symbol"}>{"Symbol"}</TableCell>
+        <TableCell key={"Change"}>{"Change"}</TableCell>
+        <TableCell key={"Price"}>{"Price"}</TableCell>
+        <TableCell key={"Changes Percentage"}>{"Changes Percentage"}</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {data.map(({ id, name, email, product, price, date, city, status }) => (
-          <TableRow key={id}>
+        { data && data.map(({ name, symbol, change, price , changesPercentage}, index) => (
+          <TableRow key={index}>
             <TableCell className="pl-3 fw-normal">{name}</TableCell>
-            <TableCell>{email}</TableCell>
-            <TableCell>{product}</TableCell>
+            <TableCell>{symbol}</TableCell>
+            <TableCell>{change}</TableCell>
             <TableCell>{price}</TableCell>
-            <TableCell>{date}</TableCell>
-            <TableCell>{city}</TableCell>
-            <TableCell>
+            <TableCell>{changesPercentage}</TableCell>
+            {/* <TableCell>
               <Chip label={status} classes={{root: classes[states[status.toLowerCase()]]}}/>
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         ))}
       </TableBody>
