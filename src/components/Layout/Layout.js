@@ -31,7 +31,8 @@ import Maps from "../../pages/maps";
 import Tables from "../../pages/tables";
 import Icons from "../../pages/icons";
 import Charts from "../../pages/charts";
-import Profile from "../../pages/profile"
+import Profile from "../../pages/profile";
+import StockDetails from "../../pages/stockDetails";
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
@@ -67,6 +68,7 @@ function Layout(props) {
               <Route path="/app/ui/icons" component={Icons} />
               <Route path="/app/ui/charts" component={Charts} />
               <Route path="/app/profile" component={Profile} />
+              <Route path="/app/stock-details" component={StockDetails} />
             </Switch>
             <Box
               mt={5}

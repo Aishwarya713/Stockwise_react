@@ -29,6 +29,11 @@ export default function App() {
           path="/app"
           render={() => <Redirect to="/app/profile" />}
         />
+        <Route
+          exact
+          path="/app"
+          render={() => <Redirect to="/app/stockDetails" />}
+        />
         <PrivateRoute path="/app" component={Layout} />
         <PublicRoute path="/login" component={Login} />
         <Route component={Error} />

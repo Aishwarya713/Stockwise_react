@@ -2,63 +2,43 @@ import React, { useEffect, useState } from "react";
 import {
   Grid,
   LinearProgress,
-  Select,
-  OutlinedInput,
-  MenuItem,
   Button
 } from "@material-ui/core";
 import { useTheme } from "@material-ui/styles";
-import {
-  ResponsiveContainer,
-  ComposedChart,
-  AreaChart,
-  LineChart,
-  Line,
-  Area,
-  PieChart,
-  Pie,
-  Cell,
-  YAxis,
-  XAxis,
-} from "recharts";
 
 // styles
 import useStyles from "./styles";
 
 // components
-import mock from "./mock";
 import Widget from "../../components/Widget";
 import PageTitle from "../../components/PageTitle";
 import { Typography } from "../../components/Wrappers";
-import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
-import BigStat from "./components/BigStat/BigStat";
 import {useSelector} from 'react-redux';
 import axios from "axios";
-
-const mainChartData = getMainChartData();
-const PieChartData = [
-  { name: "Group A", value: 400, color: "primary" },
-  { name: "Group B", value: 300, color: "secondary" },
-  { name: "Group C", value: 300, color: "warning" },
-  { name: "Group D", value: 200, color: "success" },
-];
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Dashboard(props) {
   var classes = useStyles();
   const state = useSelector(reducer => reducer.dashboardReducer);
   var theme = useTheme();
   const {stockData} = state;
+  const history = useHistory();
 
   const [sectorPerformanceData, setSectorPerformance] = useState([])
   const [gainersData, setGainersData] = useState([])
   const [losersData, setLosersData] = useState([])
   const [activeData, setActiveData] = useState([])
 
-  // const [stockData, setStockData] = useState([])
-
-  // local
-  var [mainChartState, setMainChartState] = useState("monthly");
+  const handleClick = (item) => {
+    console.log(item)
+    history.push({
+      pathname: "/app/stock-details",
+      state: {
+        stockData: item
+      }
+    })
+  }
 
   useEffect(() => {
     const AuthStr = 'Bearer '.concat(localStorage.getItem("id_token"));
@@ -87,7 +67,12 @@ export default function Dashboard(props) {
     <Grid container spacing={3}>
       {
         stockData?.map((item, index) =>(
-          <Grid item xs={4} key={index.toString()}>
+          <Grid item xs={4} key={index.toString()} onClick={() => history.push({
+            pathname: "/app/stock-details",
+            state: {
+              stockData: item
+            }
+          })}>
             <div className={classes.cardContainer}>
               <Typography variant="body1" color="text" className={classes.nameText} noWrap>
                 {item['2. name']}{`(${item['1. symbol']})`}
@@ -122,13 +107,6 @@ export default function Dashboard(props) {
         ))
       }
     </Grid>
-    <PageTitle title="Dashboard" button={<Button
-      variant="contained"
-      size="medium"
-      color="secondary"
-    >
-        Latest Reports
-    </Button>} />
       <Grid container spacing={4}>
         {sectorPerformanceData &&
         <Grid item lg={12} md={12} sm={12} xs={12}>
@@ -139,7 +117,8 @@ export default function Dashboard(props) {
             bodyClass={classes.fullHeightBody}
           >  
           {
-            sectorPerformanceData.map((item, index) => (<div className={classes.progressSection}>
+            sectorPerformanceData.map((item, index) => (
+            <div className={classes.progressSection} onClick={()=>handleClick(item)}>
               <Typography
                 size="md"
                 color="text"
@@ -170,11 +149,6 @@ export default function Dashboard(props) {
             <Table data={activeData} />
           </Widget>
         </Grid>}
-        {/* {mock.bigStat.map(stat => (
-          <Grid item md={4} sm={6} xs={12} key={stat.product}>
-            <BigStat {...stat} />
-          </Grid>
-        ))} */}
         {gainersData && <Grid item xs={12}>
           <Widget
             title="Gainers"
@@ -202,41 +176,3 @@ export default function Dashboard(props) {
   );
 }
 
-// #######################################################################
-function getRandomData(length, min, max, multiplier = 10, maxDiff = 10) {
-  var array = new Array(length).fill();
-  let lastValue;
-
-  return array.map((item, index) => {
-    let randomValue = Math.floor(Math.random() * multiplier + 1);
-
-    while (
-      randomValue <= min ||
-      randomValue >= max ||
-      (lastValue && randomValue - lastValue > maxDiff)
-    ) {
-      randomValue = Math.floor(Math.random() * multiplier + 1);
-    }
-
-    lastValue = randomValue;
-
-    return { value: randomValue };
-  });
-}
-
-function getMainChartData() {
-  var resultArray = [];
-  var tablet = getRandomData(31, 3500, 6500, 7500, 1000);
-  var desktop = getRandomData(31, 1500, 7500, 7500, 1500);
-  var mobile = getRandomData(31, 1500, 7500, 7500, 1500);
-
-  for (let i = 0; i < tablet.length; i++) {
-    resultArray.push({
-      tablet: tablet[i].value,
-      desktop: desktop[i].value,
-      mobile: mobile[i].value,
-    });
-  }
-
-  return resultArray;
-}
